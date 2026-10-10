@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a1714">
+  <meta name="description" content="برنامه‌ریز شخصی آفلاین با برنامه هفتگی، گزارش و پشتیبان‌گیری">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+  <title>برنامه‌ریز من</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar wrap">
+    <a class="brand" href="#top" aria-label="برنامه‌ریز من">
+      <span class="brand-mark">✦</span><span><strong>برنامه‌ریز من</strong><small>هر روز، یک قدم رو به جلو</small></span>
+    </a>
+    <div class="top-actions"><button class="install-btn" id="installButton" hidden>＋ نصب برنامه</button><button class="icon-btn" id="settingsButton" aria-label="تنظیمات" title="تنظیمات">⚙</button></div>
+  </header>
+
+  <main class="wrap" id="top">
+    <section class="welcome-row">
+      <div><p class="overline">داشبورد شخصی</p><h1>وقتشه روزت رو <span>بسازی.</span></h1><p class="subhead">برنامه‌ات رو ببین، پیشرفتت رو ثبت کن و قدم‌به‌قدم جلو برو.</p></div>
+      <div class="date-chip"><span class="date-icon">◷</span><div><strong id="date">در حال بارگذاری…</strong><small id="dayName">امروز</small></div></div>
+    </section>
+
+    <section class="hero-grid">
+      <article class="panel clock-panel">
+        <div class="panel-top"><span class="eyebrow">زمان محلی ایران</span><span class="live-dot"><i></i> زنده</span></div>
+        <div class="clock" id="clock">۰۰:۰۰:۰۰</div>
+        <div class="clock-footer"><span>امروز رو با تمرکز پیش ببر</span><span class="sun-symbol">☼</span></div>
+        <div class="progress-block"><div class="progress-copy"><span>پیشرفت برنامه امروز</span><strong id="progressPercent">۰٪</strong></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><div class="progress-meta"><span id="completedCount">۰ انجام‌شده</span><span id="totalCount">۰ فعالیت</span></div></div>
+      </article>
+      <article class="panel current-panel">
+        <div class="panel-top"><span class="eyebrow">در حال حاضر</span><span class="current-pill"><i></i> فعالیت فعلی</span></div>
+        <div class="current-icon" id="currentIcon">✧</div>
+        <h2 id="currentActivity">در حال پیدا کردن فعالیت…</h2>
+        <p id="currentTime" class="time-range">—</p>
+        <p id="currentNote" class="current-note">فعالیت فعلی اینجا نمایش داده می‌شود.</p>
+        <button class="btn btn-primary btn-wide" id="openStatusButton">ثبت وضعیت <span>←</span></button>
+      </article>
+    </section>
+
+    <section class="next-grid">
+      <article class="mini-panel"><div class="mini-icon prev-icon">↶</div><div class="mini-content"><span class="eyebrow">فعالیت قبلی</span><h3 id="previousActivity">—</h3><p id="previousTime">—</p><small id="previousStatus">وضعیت ثبت نشده</small></div></article>
+      <article class="mini-panel"><div class="mini-icon next-icon">↗</div><div class="mini-content"><span class="eyebrow">فعالیت بعدی</span><h3 id="nextActivity">—</h3><p id="nextTime">—</p><small id="nextCountdown">—</small></div></article>
+    </section>
+
+    <section class="panel schedule-panel">
+      <div class="section-header"><div><p class="overline">نقشه‌ی امروز</p><h2>برنامه روزانه</h2></div><span class="count-badge" id="todayName">امروز</span></div>
+      <div id="dailySchedule" class="schedule-list"></div>
+      <div id="freeDay" class="free-day" hidden><span>🌿</span><div><strong>جمعه؛ روز استراحت</strong><p>امروز برای استراحت و تجدید انرژی در نظر گرفته شده.</p></div></div>
+    </section>
+
+    <section class="panel tools-panel">
+      <div class="section-header"><div><p class="overline">مرور و نگهداری</p><h2>گزارش‌ها و پشتیبان</h2></div><span class="decor-star">✧</span></div>
+      <div class="tool-grid">
+        <button class="tool-card" id="dailyReportButton"><span class="tool-icon">▤</span><strong>گزارش روزانه</strong><small>خلاصه عملکرد امروز</small></button>
+        <button class="tool-card" id="weeklyReportButton"><span class="tool-icon">▦</span><strong>گزارش هفتگی</strong><small>مرور هفت روز اخیر</small></button>
+        <button class="tool-card" id="exportButton"><span class="tool-icon">⇩</span><strong>پشتیبان‌گیری</strong><small>ذخیره سوابق در فایل</small></button>
+        <label class="tool-card upload-card"><span class="tool-icon">⇧</span><strong>بازیابی پشتیبان</strong><small>برگرداندن فایل ذخیره‌شده</small><input id="importInput" type="file" accept="application/json" hidden></label>
+      </div>
+      <div id="reportOutput" class="report-output" aria-live="polite">برای دیدن عملکردت، یکی از گزارش‌ها رو انتخاب کن.</div>
+    </section>
+
+    <section id="activityStatusPanel" class="panel form-panel" hidden>
+      <div class="section-header"><div><p class="overline">ثبت عملکرد</p><h2>وضعیت فعالیت</h2></div><button id="closeStatusButton" class="quiet-btn">بستن ×</button></div>
+      <div class="selected-activity"><span>✦</span><div><strong id="statusActivityName">فعالیت انتخاب‌شده</strong><small id="statusActivityTime"></small></div></div>
+      <div class="action-row"><button id="markCompleted" class="btn btn-success">✓ انجام شد</button><button id="markNotCompleted" class="btn btn-danger">× انجام نشد</button><button id="rescheduleActivity" class="btn btn-ghost">↻ انتقال زمان</button></div>
+      <div id="activityReasonSection" class="reason-box" hidden>
+        <label for="activityReason">دلیل یا توضیحات</label><textarea id="activityReason" rows="3" placeholder="مثلاً: تکلیف بیشتری داشتم…"></textarea>
+        <div class="field-grid"><div><label>تاریخ جدید، در صورت انتقال</label><input id="rescheduleDate" type="hidden"><button type="button" id="openPersianCalendar" class="date-picker-button">📅 <span id="rescheduleDateLabel">انتخاب تاریخ شمسی</span></button></div><div><label for="rescheduleTime">ساعت شروع جدید</label><input id="rescheduleTime" type="time"></div></div>
+        <button id="saveActivityStatus" class="btn btn-primary">ذخیره وضعیت</button>
+      </div><p id="activityStatusMessage" class="inline-message" role="status"></p>
+    </section>
+
+    <section id="settingsPanel" class="panel settings-panel" hidden>
+      <div class="section-header"><div><p class="overline">کنترل برنامه</p><h2>تنظیمات</h2></div><button id="closeSettingsButton" class="quiet-btn">بستن ×</button></div>
+      <p class="subhead">سوابق روی همین دستگاه ذخیره می‌شوند. برای انتقال به دستگاه دیگر، از پشتیبان‌گیری استفاده کن.</p>
+      <div class="action-row"><button id="notificationButton" class="btn btn-ghost">فعال‌کردن اعلان‌ها</button><button id="resetDataButton" class="btn btn-danger">پاک‌کردن سوابق</button></div>
+      <p id="settingsMessage" class="inline-message" role="status"></p>
+    </section>
+    <section id="calendarModal" class="calendar-modal" hidden aria-modal="true" role="dialog" aria-labelledby="calendarTitle">
+      <div class="calendar-card panel">
+        <div class="calendar-top"><button type="button" id="calendarPrev" class="calendar-nav" aria-label="ماه قبل">‹</button><div><h3 id="calendarTitle">انتخاب تاریخ شمسی</h3><p id="calendarMonthLabel"></p></div><button type="button" id="calendarNext" class="calendar-nav" aria-label="ماه بعد">›</button></div>
+        <div class="calendar-weekdays"><span>ش</span><span>ی</span><span>د</span><span>س</span><span>چ</span><span>پ</span><span>ج</span></div>
+        <div id="calendarDays" class="calendar-days"></div>
+        <div class="calendar-actions"><button type="button" id="calendarToday" class="btn btn-ghost">امروز</button><button type="button" id="calendarCancel" class="btn btn-danger">انصراف</button></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer wrap"><div class="footer-line"></div><p>ساخته شده توسط <b dir="ltr">@Amirali_1100</b></p><strong>آقای برنامه نویس <span>✦</span></strong></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+  <script>if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(() => {})); }</script>
+</body>
+</html>
